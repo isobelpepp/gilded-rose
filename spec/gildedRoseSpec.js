@@ -2,10 +2,18 @@
 
 describe("Gilded Rose", function() {
 
-  it("should foo", function() {
-    const gildedRose = new Shop([ new Item("foo", 0, 0) ]);
-    const items = gildedRose.updateQuality();
-    expect(items[0].name).toEqual("fixme");
+  let gildedRose;
+  let items;
+
+  beforeEach(() => {
+    gildedRose = new Shop([ new Item("foo", 3, 10) ]);
+    items = gildedRose.updateQuality();
   });
 
+  describe('Regular items', () => {
+    it("should decrease the quality by 1 at the end of the day given a regular item", function() {
+      expect(items[0].name).toEqual("foo");
+      expect(items[0].quality).toEqual(9)
+    });
+  });
 });
