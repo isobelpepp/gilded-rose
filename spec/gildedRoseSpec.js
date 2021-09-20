@@ -51,4 +51,13 @@ describe("Gilded Rose", function() {
       expect(brie[0].quality).toEqual(50)
     })
   })
+
+  describe('Sulfuras', () => {
+    it('quality and sellIn value never change', () => {
+      let gildedRoseSulfura = new Shop([new Item('Sulfuras, Hand of Ragnaros', 5, 10)])
+      let sulfuras = gildedRoseSulfura.updateQuality()
+      expect(sulfuras[0].quality).toEqual(10)
+      expect(sulfuras[0].sellIn).toEqual(5)
+    })
+  })
 });
