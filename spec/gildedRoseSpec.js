@@ -97,5 +97,32 @@ describe("Gilded Rose", function() {
       expect(backstagePass[0].sellIn).toEqual(-3)
     })
   });
+  
+  describe('Conjured', () => {
+    let gildedRoseConjured;
+    let conjuredItems;
+    beforeEach(() => {
+      gildedRoseConjured = new Shop([new Item('Conjured', 5, 21)])
+      conjuredItems = gildedRoseConjured.updateQuality()
+    });
+    it('degrades in quality twice as fast as normal items', () => {
+      expect(conjuredItems[0].quality).toEqual(19)
+    })
+    it('does not let quality go below 0', () => {
+      for(let i = 0; i < 15; i ++){
+        gildedRoseConjured.updateQuality();
+      }
+      let conjuredItems = gildedRoseConjured.updateQuality()
+      expect(conjuredItems[0].quality).toEqual(0)
+      expect(conjuredItems[0].sellIn).toEqual(-12)
+    })
+  it('degrades in quality twice as much when sellIn is under 0', () => {
+    for(let i = 0; i < 5; i ++){
+      gildedRoseConjured.updateQuality();
+    }
+    let conjuredItems = gildedRoseConjured.updateQuality()
+    expect(conjuredItems[0].quality).toEqual(5)
+  })
+})
 });
 
