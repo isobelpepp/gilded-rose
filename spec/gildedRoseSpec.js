@@ -60,4 +60,45 @@ describe("Gilded Rose", function() {
       expect(sulfuras[0].sellIn).toEqual(5)
     })
   })
+
+  describe('Backstage Passes', () => {
+    let gildedRoseBackstage;
+    let backstagePass;
+    beforeEach(() => {
+      gildedRoseBackstage = new Shop([new Item('Backstage passes to a TAFKAL80ETC concert', 12, 10)])
+      backstagePass = gildedRoseBackstage.updateQuality();
+    });
+    it('if sellIn is above 10 increases in quality by 1', () => {
+      expect(backstagePass[0].quality).toEqual(11)
+      expect(backstagePass[0].sellIn).toEqual(11)
+    })
+    it('increases in quality by 2 if sellIn is equal to or less than 10', () => {
+      for(let i = 0; i < 3; i ++){
+        gildedRoseBackstage.updateQuality();
+      }
+      let updatedBackstagePass = gildedRoseBackstage.updateQuality()
+      expect(updatedBackstagePass[0].quality).toEqual(18)
+      expect(updatedBackstagePass[0].sellIn).toEqual(7)
+    })
+    it('increases in quality by 3 if sellIn is equal to or less than 5', () => {
+      let gildedRoseBackstage = new Shop([new Item('Backstage passes to a TAFKAL80ETC concert', 5, 10)])
+      for(let i = 0; i < 3; i ++){
+        gildedRoseBackstage.updateQuality();
+      }
+      let updatedBackstagePass = gildedRoseBackstage.updateQuality()
+      expect(updatedBackstagePass[0].quality).toEqual(22)
+      expect(updatedBackstagePass[0].sellIn).toEqual(1)
+    });
+    it('drops quality to 0 after the concert ends', () => {
+      for(let i = 0; i < 14; i ++){
+        gildedRoseBackstage.updateQuality();
+      }
+      expect(backstagePass[0].quality).toEqual(0)
+      expect(backstagePass[0].sellIn).toEqual(-3)
+    })
+  });
 });
+
+// “Backstage passes”, like aged brie, increases in Quality as it’s SellIn value approaches; 
+// Quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less but Quality 
+// drops to 0 after the concert
